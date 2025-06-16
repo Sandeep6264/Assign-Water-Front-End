@@ -1,127 +1,95 @@
-💧 Water Tracker – Frontend (React JS + Redux)
-A clean and minimal water tracking web app where users can add water intake, view status, set custom goals, and track weekly history.
 
-🖼️ UI Screens
-🏠 Home
-Navigation to Add Water, Status, and History
+# 💧 Water Tracker – Frontend
 
-➕ Add Water
+A simple, beautiful, and responsive web app for tracking daily water intake, built with **React**, **Redux Toolkit**, and **SweetAlert2**. This app helps users stay hydrated by tracking their water intake, setting daily targets, and viewing their weekly progress.
 
-Enter custom amount or use quick-add buttons (250ml, 500ml, etc.)
+---
 
-Set your daily goal (default is 2000ml)
+## ✅ Features
 
-Saved using localStorage for persistence
+- ➕ **Add Water Intake**  
+  Users can add their water consumption using a custom input or one-click quick-add buttons (250ml, 500ml, etc.).
 
-Displays alerts (success/failure) using SweetAlert
+- 🎯 **Set Daily Goal (Target)**  
+  Users can set a personalized water target (default is 2000 ml). It is stored in `localStorage` for persistence.
 
-📊 Status
+- 📊 **Today's Status**  
+  - Consumed water vs. goal
+  - Remaining water
+  - Percentage of goal completed
+  - Over-drinking detection and feedback
 
-Displays today’s intake
+- 📅 **Weekly History View**  
+  Shows the user’s water intake for each day of the week with:
+  - Target
+  - Intake
+  - Remaining/Extra
+  - Percentage Progress
 
-Shows:
+- 🎨 **Responsive UI**  
+  Styled with clean layout and alert dialogs using SweetAlert2.
 
-Consumed water
+---
 
-Target (custom or default)
+## ✨ Upcoming Improvements
 
-Remaining
+- 🔐 User login & registration (JWT-based)
+- 📱 Mobile responsive layout
+- 🔔 Daily reminder popups
+- 📈 Progress circle/ring indicator
+- ☁️ Save target in backend (instead of localStorage)
+- 🧪 Unit testing with Jest and React Testing Library
 
-Percentage completed
+---
 
-Overdrink alert if user exceeded goal
+## 🛠️ How to Run the Project
 
-📅 History
+### 1. Clone the Repository
+git clone https://github.com/your-username/water-tracker-frontend.git
+cd water-tracker-frontend
 
-Weekly breakdown of water intake by day
+2. Install Dependencies
+npm install
 
-Shows each day's:
+3. Start the Development Server
+npm run dev
+Open your browser and go to: http://localhost:5173
 
-Quantity consumed
+📦 Main Dependencies
+Install manually if needed:
+npm install react react-dom react-redux @reduxjs/toolkit react-router-dom sweetalert2
+Make sure you have Node.js and Vite installed.
 
-Target
+🔗 Backend API Requirements
+Ensure the Spring Boot backend is running at:
 
-Remaining/Extra
+http://localhost:9878/WaterApplication-backend
+API Endpoints Used:
+Method	Endpoint	Description
+POST	/api/water/add	Add water intake
+GET	/api/water/status	Get today’s status
+GET	/api/water/history	Fetch weekly history
 
-Percentage status
+📁 Folder Structure
 
-⚙️ Technologies Used
-React JS
-
-Redux Toolkit
-
-React Router
-
-SweetAlert2 for user alerts
-
-
-
-🧠 Core Functionalities
-🔁 Add Water Intake
-dispatch(fetchWaterDetails(quantity)).unwrap().then((res) => {
-  // Handles success or failure
-});
-🎯 Set Daily Goal (Target)
-
-const [target, setTarget] = useState( 2000);
-
-const handleTargetChange = (e) => {
-  setTarget(e.target.value);
-};
-✅ Quick Add Buttons
-[250, 500, 750, 1000].map(val => (
-  <button onClick={() => handleAdd(val)}>+{val} ml</button>
-));
-📈 Status Calculation
-
-const percent = Math.round((item.userQty / userTarget) * 100);
-📦 Folder Structure
 src/
 ├── components/
-│   ├── AddWater.js
-│   ├── Status.js
-│   └── History.js
+│   ├── AddWater.js          # Add water screen
+│   ├── Status.js            # Daily status screen
+│   └── History.js           # Weekly history
 ├── features/
-│   └── waterSlice.js
-├── App.js
-├── index.js
-└── store.js
-🧪 Sample waterSlice.js
+│   └── waterSlice.js        # Redux slice for water actions
+├── App.js                   # Main router
+├── index.js                 # React root
+└── store.js                 # Redux store setup
+🖼️ Screenshots
+➕ Add Water Page
+Add water using custom input or quick-add buttons. Set your goal here too.
 
-export const fetchWaterDetails = createAsyncThunk("water/add", async (data) => {
-  const response = await fetch("http://localhost:9878/WaterApplication-backend/api/water/add", {
-    method: "POST",
-    body: JSON.stringify({ userQty: data }),
-    headers: { 'Content-Type': "application/json" },
-    credentials: 'include'
-  });
-  return await response.json();
-});
-🧾 Sample API Response Used by Frontend
 
-[
-  {
-    "wid": 222,
-    "userQty": 500,
-    "defaultQty": 2000,
-    "remainQty": 1500,
-    "day": "WEDNESDAY"
-  },
-  {
-    "wid": 353,
-    "userQty": 2100,
-    "defaultQty": 2000,
-    "remainQty": -100,
-    "day": "TUESDAY"
-  }
-]
-🚀 Future Enhancements
-User login/registration
+📊 Status Page
+View how much you've drunk, how much is left, and whether you're above or below the target.
 
-Mobile responsiveness
 
-Toast notifications
-
-Progress rings
-
-Reminders for low intake
+📅 Weekly History Page
+View a full breakdown of water consumption for each day of the week.
