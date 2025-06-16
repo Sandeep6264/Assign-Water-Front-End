@@ -1,12 +1,127 @@
-# React + Vite
+💧 Water Tracker – Frontend (React JS + Redux)
+A clean and minimal water tracking web app where users can add water intake, view status, set custom goals, and track weekly history.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🖼️ UI Screens
+🏠 Home
+Navigation to Add Water, Status, and History
 
-Currently, two official plugins are available:
+➕ Add Water
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Enter custom amount or use quick-add buttons (250ml, 500ml, etc.)
 
-## Expanding the ESLint configuration
+Set your daily goal (default is 2000ml)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Saved using localStorage for persistence
+
+Displays alerts (success/failure) using SweetAlert
+
+📊 Status
+
+Displays today’s intake
+
+Shows:
+
+Consumed water
+
+Target (custom or default)
+
+Remaining
+
+Percentage completed
+
+Overdrink alert if user exceeded goal
+
+📅 History
+
+Weekly breakdown of water intake by day
+
+Shows each day's:
+
+Quantity consumed
+
+Target
+
+Remaining/Extra
+
+Percentage status
+
+⚙️ Technologies Used
+React JS
+
+Redux Toolkit
+
+React Router
+
+SweetAlert2 for user alerts
+
+
+
+🧠 Core Functionalities
+🔁 Add Water Intake
+dispatch(fetchWaterDetails(quantity)).unwrap().then((res) => {
+  // Handles success or failure
+});
+🎯 Set Daily Goal (Target)
+
+const [target, setTarget] = useState( 2000);
+
+const handleTargetChange = (e) => {
+  setTarget(e.target.value);
+};
+✅ Quick Add Buttons
+[250, 500, 750, 1000].map(val => (
+  <button onClick={() => handleAdd(val)}>+{val} ml</button>
+));
+📈 Status Calculation
+
+const percent = Math.round((item.userQty / userTarget) * 100);
+📦 Folder Structure
+src/
+├── components/
+│   ├── AddWater.js
+│   ├── Status.js
+│   └── History.js
+├── features/
+│   └── waterSlice.js
+├── App.js
+├── index.js
+└── store.js
+🧪 Sample waterSlice.js
+
+export const fetchWaterDetails = createAsyncThunk("water/add", async (data) => {
+  const response = await fetch("http://localhost:9878/WaterApplication-backend/api/water/add", {
+    method: "POST",
+    body: JSON.stringify({ userQty: data }),
+    headers: { 'Content-Type': "application/json" },
+    credentials: 'include'
+  });
+  return await response.json();
+});
+🧾 Sample API Response Used by Frontend
+
+[
+  {
+    "wid": 222,
+    "userQty": 500,
+    "defaultQty": 2000,
+    "remainQty": 1500,
+    "day": "WEDNESDAY"
+  },
+  {
+    "wid": 353,
+    "userQty": 2100,
+    "defaultQty": 2000,
+    "remainQty": -100,
+    "day": "TUESDAY"
+  }
+]
+🚀 Future Enhancements
+User login/registration
+
+Mobile responsiveness
+
+Toast notifications
+
+Progress rings
+
+Reminders for low intake
